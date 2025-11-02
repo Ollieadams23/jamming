@@ -3,6 +3,7 @@ import SearchBar from '../SearchBar/SearchBar';
 import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
 import './App.css';
+import Spotify from '../../util/spotify.js';
 
 
 
@@ -29,10 +30,8 @@ class App extends React.Component {
     
 
       
-    PlaylistName: [
-      {name:'My Playlist0'},
-      {name:'My Playlist1'},
-      {name:'My Playlist2'}],
+    PlaylistName: 'My Playlist0',
+      
     
 
       PlaylistTracks: [
@@ -55,6 +54,8 @@ class App extends React.Component {
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
+    this.savePlaylist = this.savePlaylist.bind(this);
+    this.search = this.search.bind(this);
 
     }
   
@@ -79,6 +80,21 @@ class App extends React.Component {
       this.setState({PlaylistName: name});
     }
 
+    savePlaylist() {
+      //to be implemented
+    }
+
+    search(term) {
+      console.log(term);
+      Spotify({term})
+      //commented out this .then as not working throws error
+      // .then(tracks => {
+      //   this.setState({SearchResults: tracks});
+      // });
+
+      //to be implemented
+    }
+
 
   render() {
     //console.log(...this.state.SearchResults)
@@ -86,10 +102,12 @@ class App extends React.Component {
     <div>
   <h1>Ja<span className="highlight">mmm</span>ing</h1>
   <div className="App">
-    <SearchResults SearchResults={this.state.SearchResults} onAdd={this.addTrack}/>
+    <SearchBar onSearch={this.search}/>
     {/* <!-- Add a SearchBar component --> */}
+    <SearchResults SearchResults={this.state.SearchResults} onAdd={this.addTrack}/>
+    
     <div className="App-playlist" >
-      <Playlist onNameChange={this.updatePlaylistName} Playlists={this.state.PlaylistName} PlaylistTracks={this.state.PlaylistTracks} onRemove={this.removeTrack}/>
+      <Playlist onSave={this.savePlaylist} onNameChange={this.updatePlaylistName} Playlists={this.state.PlaylistName} PlaylistTracks={this.state.PlaylistTracks} onRemove={this.removeTrack}/>
       {/* <!-- Add a Playlist component --> */}
     </div>
   </div>
