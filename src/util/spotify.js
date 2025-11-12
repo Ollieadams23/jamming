@@ -6,7 +6,7 @@ const REDIRECT_URI = 'https://totaljamms.surge.sh';
 
 //uncomment for local testing
 //const REDIRECT_URI = 'http://127.0.0.1:3000/public/index.html';
-//
+
 const SCOPES = 'user-read-private user-read-email playlist-read-private playlist-read-collaborative playlist-modify-public playlist-modify-private';
 
 let accessToken = null;
@@ -181,10 +181,11 @@ async function exchangeCodeForToken(code) {
     // Clear the code from URL
     window.history.replaceState({}, document.title, window.location.pathname);
 
-    // Trigger profile loaded event with small delay to ensure components are ready
+    // Trigger profile loaded event with delay to ensure components are ready
     setTimeout(() => {
+      console.log('Dispatching profileLoaded event');
       window.dispatchEvent(new CustomEvent('profileLoaded'));
-    }, 100);
+    }, 500); // Increased delay
     
     return accessToken;
   } catch (error) {

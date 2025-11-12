@@ -36,6 +36,7 @@ class App extends React.Component {
     this.createNewPlaylist = this.createNewPlaylist.bind(this);
     this.deletePlaylist = this.deletePlaylist.bind(this);
     this.refreshPlaylists = this.refreshPlaylists.bind(this);
+    this.handleProfileLoadedInApp = this.handleProfileLoadedInApp.bind(this);
 
     }
 
@@ -62,6 +63,24 @@ class App extends React.Component {
         this.setState({ isLoadingAuth: false });
       }, 2000); // Increased to 2 seconds to ensure token exchange completes
     }
+
+    // Also listen for profileLoaded events from Spotify auth
+    window.addEventListener('profileLoaded', this.handleProfileLoadedInApp);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('profileLoaded', this.handleProfileLoadedInApp);
+  }
+
+  handleProfileLoadedInApp = () => {
+    console.log('App received profileLoaded event');
+    setTimeout(() => {
+      const token = localStorage.getItem('spotify_access_token');
+      if (token) {
+        console.log('App: Refreshing playlists after profileLoaded event');
+        this.refreshPlaylists();
+      }
+    }, 1000); // Wait a bit for Profile component to finish its work
   }
   
 //methods

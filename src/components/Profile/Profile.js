@@ -16,11 +16,15 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
+    console.log('Profile: componentDidMount called');
     // Check if user is already logged in
     const accessToken = localStorage.getItem('spotify_access_token');
     const expiresAt = localStorage.getItem('spotify_token_expiry');
 
+    console.log('Profile: Initial token check - token exists:', !!accessToken, 'expires:', expiresAt);
+
     if (accessToken && expiresAt && Date.now() < parseInt(expiresAt)) {
+      console.log('Profile: User already logged in, setting state and fetching data');
       this.setState({
         isLoggedIn: true,
         accessToken,
@@ -34,10 +38,14 @@ class Profile extends React.Component {
         this.fetchUserPlaylists()
       ]).finally(() => {
         this.setState({ isLoadingProfile: false });
+        console.log('Profile: Initial data fetch complete');
       });
+    } else {
+      console.log('Profile: No valid token found on mount');
     }
 
     // Listen for Spotify auth updates
+    console.log('Profile: Adding profileLoaded event listener');
 window.addEventListener('profileLoaded', this.handleProfileLoaded.bind(this));  
 }
 
@@ -46,10 +54,14 @@ window.removeEventListener('profileLoaded', this.handleProfileLoaded.bind(this))
 }
 
 handleProfileLoaded = () => {
+  console.log('Profile: handleProfileLoaded called');
   const accessToken = localStorage.getItem('spotify_access_token');
   const expiresAt = localStorage.getItem('spotify_token_expiry');
   
+  console.log('Profile: Token check - token exists:', !!accessToken, 'expires:', expiresAt);
+  
   if (accessToken && expiresAt && Date.now() < parseInt(expiresAt)) {
+    console.log('Profile: Setting logged in state and fetching data');
     this.setState({
       isLoggedIn: true,
       accessToken,
@@ -63,7 +75,10 @@ handleProfileLoaded = () => {
       this.fetchUserPlaylists()
     ]).finally(() => {
       this.setState({ isLoadingProfile: false });
+      console.log('Profile: Finished loading profile data');
     });
+  } else {
+    console.log('Profile: Token invalid or expired');
   }
 }
 
