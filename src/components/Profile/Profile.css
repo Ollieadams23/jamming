@@ -1,0 +1,129 @@
+.profile-container {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  border: 1px solid #6c41ec;
+}
+
+.login-section {
+  text-align: center;
+}
+
+.login-section h2 {
+  color: #6c41ec;
+  margin-bottom: 10px;
+}
+
+.login-section p {
+  margin-bottom: 20px;
+  color: #ccc;
+}
+
+.login-button {
+  background-color: #1db954;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.login-button:hover {
+  background-color: #1ed760;
+}
+
+.user-profile {
+  color: white;
+}
+
+.profile-info h2 {
+  color: #6c41ec;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.profile-details {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-image img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid #6c41ec;
+}
+
+.profile-data p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.oauth-info {
+  background-color: rgba(108, 65, 236, 0.1);
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.oauth-info h3 {
+  color: #6c41ec;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.oauth-info p {
+  margin: 5px 0;
+  font-size: 12px;
+  word-break: break-all;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.refresh-button, .logout-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.refresh-button {
+  background-color: #6c41ec;
+  color: white;
+}
+
+.refresh-button:hover {
+  background-color: #5a35c4;
+}
+
+.logout-button {
+  background-color: #e22134;
+  color: white;
+}
+
+.logout-button:hover {
+  background-color: #c81e31;
+}
+
+@media only screen and (max-width: 768px) {
+  .profile-details {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .profile-actions {
+    flex-direction: column;
+  }
+}

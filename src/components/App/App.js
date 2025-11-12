@@ -2,6 +2,7 @@ import React from 'react';
 import SearchBar from '../SearchBar/SearchBar';
 import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
+import Profile from '../Profile/Profile';
 import './App.css';
 import Spotify from '../../util/spotify.js';
 
@@ -13,41 +14,11 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-    SearchResults:[
-          {name: 'jjj7',
-          artist: 'artist',
-          album: 'album',
-          id: '7'},
-          {name: 'jjj8',
-          artist: 'artist',
-          album: 'album',
-          id: '8'},
-          {name: 'jjj9',
-          artist: 'artist',
-          album: 'album',
-          id: '9'}
-    ],
-    
-
-      
+    SearchResults: [],
     PlaylistName: 'My Playlist0',
-      
-    
-
-      PlaylistTracks: [
-        {name: 'aaa',
-        artist: 'artist',
-        album: 'album',
-        id: '2'},
-        {name: 'bbb',
-        artist: 'artist',
-        album: 'album',
-        id: '3'},
-        {name: 'ccc',
-        artist: 'artist',
-        album: 'album',
-        id: '4'}
-        ]}
+    PlaylistTracks: []
+        
+        }
 
 
     //binds
@@ -81,19 +52,40 @@ class App extends React.Component {
     }
 
     savePlaylist() {
-      //to be implemented
+      // Extract track URIs from the current playlist tracks
+      const trackUris = this.state.PlaylistTracks.map(track => track.uri);
+      
+      // Call Spotify.savePlaylist with playlist name and track URIs
+      Spotify.savePlaylist(this.state.PlaylistName, trackUris);
+      
+      // Reset the playlist after saving
+      this.setState({PlaylistName: "new playlist"});
+      this.setState({PlaylistTracks: []});
     }
 
     search(term) {
-      console.log(term);
-      Spotify({term})
-      //commented out this .then as not working throws error
-      // .then(tracks => {
-      //   this.setState({SearchResults: tracks});
-      // });
-
-      //to be implemented
-    }
+  console.log('Searching for:', term);
+  
+  // Capture the Promise returned by Spotify function
+  const searchPromise = Spotify.search(term);
+  
+  // Handle the results when they come back
+  if (searchPromise && searchPromise.then) {
+    searchPromise.then(tracks => {
+      console.log('Received tracks:', tracks);
+      alert(`Found ${tracks ? tracks.length : 0} tracks`);
+      
+      // Update state with the real search results
+      console.log('About to update state with tracks:', tracks);
+      console.log('Current SearchResults state before update:', this.state.SearchResults);
+      this.setState({SearchResults: tracks || []});
+      console.log('State updated! New SearchResults:', this.state.SearchResults);
+    }).catch(error => {
+      console.error('Search failed:', error);
+      alert('Search failed');
+    });
+  }
+}
 
 
   render() {
@@ -102,6 +94,7 @@ class App extends React.Component {
     <div>
   <h1>Ja<span className="highlight">mmm</span>ing</h1>
   <div className="App">
+    <Profile />
     <SearchBar onSearch={this.search}/>
     {/* <!-- Add a SearchBar component --> */}
     <SearchResults SearchResults={this.state.SearchResults} onAdd={this.addTrack}/>

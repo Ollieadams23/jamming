@@ -1,4 +1,3 @@
-
 const CLIENT_ID = '5ae439d04bd5467484c057d464a3bc8b';
 const REDIRECT_URI = 'http://127.0.0.1:3000/public/index.html';
 const SCOPES = 'user-read-private user-read-email playlist-read-private playlist-read-collaborative playlist-modify-public playlist-modify-private';
@@ -184,85 +183,9 @@ async function search(term) {
   }
 }
 
-
-
-// Save playlist method
-async function savePlaylist(playlistName, trackUris) {
-  // Check if there are values saved to the method's two arguments. If not, return.
-  if (!playlistName || !trackUris || !Array.isArray(trackUris) || trackUris.length === 0) {
-    console.log('No playlist name or track URIs provided');
-    return;
-  }
-
-  // Get token from storage
-  const token = getTokenFromStorage();
-  if (!token) {
-    console.error('No access token available');
-    return;
-  }
-
-  const headers = {
-    'Authorization': `Bearer ${token}`,
-    'Content-Type': 'application/json'
-  };
-
-  try {
-    // Step 1: Get user ID
-    const userResponse = await fetch('https://api.spotify.com/v1/me', { headers });
-    if (!userResponse.ok) {
-      throw new Error('Failed to fetch user ID');
-    }
-    const userData = await userResponse.json();
-    const userID = userData.id;
-    console.log('User ID:', userID);
-
-    // Step 2: Create playlist
-    const createPlaylistResponse = await fetch(`https://api.spotify.com/v1/users/${userID}/playlists`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({
-        "name": playlistName,
-        "description": "New playlist description",
-        "public": false
-      })
-    });
-
-    if (!createPlaylistResponse.ok) {
-      throw new Error('Failed to create playlist');
-    }
-    const playlistData = await createPlaylistResponse.json();
-    const playlistID = playlistData.id;
-    console.log('Playlist created:', playlistData);
-
-    // Step 3: Add tracks to playlist
-    const addTracksResponse = await fetch(`https://api.spotify.com/v1/playlists/${playlistID}/tracks`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({
-        uris: trackUris
-      })
-    });
-
-    if (!addTracksResponse.ok) {
-      throw new Error('Failed to add tracks to playlist');
-    }
-
-    const trackData = await addTracksResponse.json();
-    console.log('Tracks added successfully:', trackData);
-    console.log('Playlist saved successfully:', playlistName, 'with tracks:', trackUris);
-
-  } catch (error) {
-    console.error('Error saving playlist:', error);
-  }
-}
-
-
-
-// Export the Spotify object with search and savePlaylist methods
+// Export the Spotify object with search method
 const Spotify = {
-  search: search,
-  savePlaylist: savePlaylist,
-  logout: logout
+  search: search
 };
 
 export default Spotify;
