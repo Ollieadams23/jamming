@@ -84,6 +84,51 @@
   word-break: break-all;
 }
 
+.user-playlists {
+  background-color: rgba(108, 65, 236, 0.1);
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.user-playlists h3 {
+  color: #6c41ec;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.playlists-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.playlist-item {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 10px;
+  border-radius: 5px;
+  border-left: 3px solid #1db954;
+}
+
+.playlist-item h4 {
+  color: white;
+  margin: 0 0 5px 0;
+  font-size: 14px;
+}
+
+.playlist-item p {
+  color: #ccc;
+  margin: 2px 0;
+  font-size: 12px;
+}
+
+.playlist-description {
+  font-style: italic;
+  opacity: 0.8;
+}
+
 .profile-actions {
   display: flex;
   gap: 10px;
@@ -126,4 +171,31 @@
   .profile-actions {
     flex-direction: column;
   }
+}
+
+/* Profile loading spinner styles */
+.profile-loading {
+  text-align: center;
+  padding: 30px;
+}
+
+.profile-spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #1db954;
+  border-radius: 50%;
+  animation: profile-spin 1s linear infinite;
+  margin: 0 auto 15px auto;
+}
+
+.profile-loading p {
+  color: #ccc;
+  font-size: 14px;
+  margin: 0;
+}
+
+@keyframes profile-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

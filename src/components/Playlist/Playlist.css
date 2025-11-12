@@ -27,7 +27,6 @@
   padding: .77rem 0;
   border-radius: 54px;
   border-width: 0px;
-  margin-top: 1.27rem;
   background-color: #6c41ec;
   text-align: center;
   font-size: .83rem;
@@ -38,6 +37,48 @@
 
 .Playlist-save:hover {
   background-color: rgba(108, 65, 233, .7);
+}
+
+.Playlist-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.27rem;
+}
+
+.save-button-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.saved-indicator {
+  color: #1db954;
+  font-size: 1.2rem;
+  font-weight: bold;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.Playlist-delete {
+  cursor: pointer;
+  width: 10rem;
+  padding: .77rem 0;
+  border-radius: 54px;
+  border-width: 0px;
+  background-color: #e22134;
+  text-align: center;
+  font-size: .83rem;
+  transition: background-color .25s;
+  color: #fff;
+  font-weight: 500;
+}
+
+.Playlist-delete:hover {
+  background-color: rgba(226, 33, 52, .7);
 }
 
 ::-webkit-scrollbar {
