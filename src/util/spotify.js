@@ -1,6 +1,10 @@
 
 const CLIENT_ID = '5ae439d04bd5467484c057d464a3bc8b';
-const REDIRECT_URI = 'http://127.0.0.1:3000/public/index.html';
+
+const REDIRECT_URI = 'https://ollieadams23.github.io/jamming/index.html';
+
+//const REDIRECT_URI = 'http://127.0.0.1:3000/public/index.html';
+
 const SCOPES = 'user-read-private user-read-email playlist-read-private playlist-read-collaborative playlist-modify-public playlist-modify-private';
 
 let accessToken = null;
